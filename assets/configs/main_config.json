@@ -1,0 +1,17 @@
+{
+    "width": 900,
+    "height": 900,
+    "speed": 4,
+    "angle": -30,
+    "logos": [
+        "/home/kotdath/omp/personal/Pizel2D/assets/logos/CDLogo.png",
+        "/home/kotdath/omp/personal/Pizel2D/assets/logos/DVDLogo.png",
+        "/home/kotdath/omp/personal/Pizel2D/assets/logos/BluRayLogo.png"
+    ],
+    "color" : {
+        "r": 1,
+        "g": 1,
+        "b": 0
+    },
+    "scale": 2
+}
