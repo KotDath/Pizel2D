@@ -3,27 +3,26 @@
 
 #include <SFML/Graphics.hpp>
 
-class Rectangle
-{
-    sf::RectangleShape _rectangle;
+class Rectangle {
+  sf::RectangleShape _rectangle;
 
-    // Все дефолтные данные надо будет прочитать из конфигурационного файла
-    bool _shouldDraw = true;
-    float _color[3] = { 1.0f, 0.0f, 0.0f };
+  // Все дефолтные данные надо будет прочитать из конфигурационного файла
+  bool _shouldDraw = true;
+  float _color[3] = {1.0f, 0.0f, 0.0f};
 
-    float _xSpeed = 1.0f;
-    float _ySpeed = 0.5f;
+  float _xSpeed = 1.0f;
+  float _ySpeed = 0.5f;
 
-public:
-    Rectangle() = default;
-    Rectangle(sf::Vector2f size);
+ public:
+  Rectangle() = default;
+  Rectangle(sf::Vector2f size);
 
-    void ReverseMove();
-    float* GetColors();
-    bool& GetShouldDraw();
-    void Draw(sf::RenderTarget& target);
-    void Update();
-    void SetPosition(const sf::Vector2f position);
+  void ReverseMove();
+  float* GetColors();
+  bool& GetShouldDraw();
+  void Draw(sf::RenderTarget& target);
+  void Update();
+  void SetPosition(const sf::Vector2f position);
 };
 
-#endif //RECTANGLE_H
+#endif  // RECTANGLE_H

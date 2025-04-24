@@ -1,44 +1,43 @@
-include(FetchContent)
-
-set(SFML_VERSION 3.0.0)
-set(IMGUI_VERSION 1.91.8)
-set(IMGUI_SFML_VERSION 3.0)
-set(JSON_VERSION 3.11.3)
-
-FetchContent_Declare(
-  SFML
-  URL "https://github.com/SFML/SFML/archive/${SFML_VERSION}.zip"
-)
-
-FetchContent_Declare(
-  imgui
-  URL "https://github.com/ocornut/imgui/archive/v${IMGUI_VERSION}.zip"
-)
-
-FetchContent_Declare(
-  imgui-sfml
-  URL "https://github.com/SFML/imgui-sfml/archive/v${IMGUI_SFML_VERSION}.zip"
-)
-
-FetchContent_Declare(
-  json
-  URL "https://github.com/nlohmann/json/archive/refs/tags/v${JSON_VERSION}.zip"
-)
+# Configuration for third-party libraries
+# All libraries are included as Git submodules
 
 # SFML
 option(SFML_BUILD_AUDIO "Build audio" OFF)
 option(SFML_BUILD_NETWORK "Build network" OFF)
-FetchContent_MakeAvailable(sfml)
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SFML/CMakeLists.txt")
+    add_subdirectory(SFML)
+else()
+    message(FATAL_ERROR "SFML submodule not initialized. Run 'git submodule update --init --recursive'")
+endif()
 
 # Dear ImGui
-FetchContent_MakeAvailable(imgui)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h")
+    set(IMGUI_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_tables.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp
+    )
+    add_library(imgui STATIC ${IMGUI_SOURCES})
+    target_include_directories(imgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
+else()
+    message(FATAL_ERROR "ImGui submodule not initialized. Run 'git submodule update --init --recursive'")
+endif()
 
 # ImGui-SFML
-set(IMGUI_DIR ${imgui_SOURCE_DIR})
-option(IMGUI_SFML_FIND_SFML "Use find_package to find SFML" OFF)
-option(IMGUI_SFML_IMGUI_DEMO "Build imgui_demo.cpp" OFF)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/imgui-sfml/CMakeLists.txt")
+    set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
+    option(IMGUI_SFML_FIND_SFML "Use find_package to find SFML" OFF)
+    option(IMGUI_SFML_IMGUI_DEMO "Build imgui_demo.cpp" OFF)
+    add_subdirectory(imgui-sfml)
+else()
+    message(FATAL_ERROR "ImGui-SFML submodule not initialized. Run 'git submodule update --init --recursive'")
+endif()
 
-FetchContent_MakeAvailable(imgui-sfml)
-
-# JSON
-FetchContent_MakeAvailable(json)
+# nlohmann-json
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/json/CMakeLists.txt")
+    add_subdirectory(json EXCLUDE_FROM_ALL)
+else()
+    message(FATAL_ERROR "nlohmann-json submodule not initialized. Run 'git submodule update --init --recursive'")
+endif()
