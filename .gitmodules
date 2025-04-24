@@ -1,0 +1,16 @@
+[submodule "thirdparty/sfml"]
+	path = thirdparty/sfml
+	url = https://github.com/SFML/SFML.git
+	ignore = untracked
+[submodule "thirdparty/imgui"]
+	path = thirdparty/imgui
+	url = https://github.com/ocornut/imgui
+	ignore = untracked
+[submodule "thirdparty/imgui-sfml"]
+	path = thirdparty/imgui-sfml
+	url = https://github.com/SFML/imgui-sfml
+	ignore = untracked
+[submodule "thirdparty/nlohmann_json"]
+	path = thirdparty/nlohmann_json
+	url = https://github.com/nlohmann/json
+	ignore = untracked
